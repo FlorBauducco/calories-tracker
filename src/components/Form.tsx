@@ -1,8 +1,18 @@
-import { useState, type ChangeEvent } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type Dispatch,
+  type SubmitEvent,
+} from "react";
 import { categories } from "../data/categories";
 import type { Activity } from "../types";
+import type { ActivityActions } from "../reducers/activity-reducer";
 
-export default function Form() {
+type FormProps = {
+  dispatch: Dispatch<ActivityActions>;
+};
+
+export default function Form({ dispatch }: FormProps) {
   const [activity, setActivity] = useState<Activity>({
     category: 1,
     name: "",
@@ -27,8 +37,16 @@ export default function Form() {
     return name.trim() !== "" && calories > 0;
   };
 
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch({ type: "save-activity", payload: { newActivity: activity } });
+  };
+
   return (
-    <form className="space-y-5 bg-white shadow p-10 rounded-lg">
+    <form
+      className="space-y-5 bg-white shadow p-10 rounded-lg"
+      onSubmit={handleSubmit}
+    >
       <div className="grid grid-cols-1 gap-3">
         <label htmlFor="category" className="font-bold">
           Categoría:
@@ -79,7 +97,7 @@ export default function Form() {
         type="submit"
         className=" bg-gray-500 hover:bg-gray-700 w-full p-2 font-bold uppercase text-white cursor-pointer
         disabled:opacity-10"
-        value="Añadir"
+        value={activity.category === 1 ? "Añadir comida" : "Añadir ejercicio"}
         disabled={!isValidActivity()}
       />
     </form>
