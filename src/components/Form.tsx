@@ -1,8 +1,9 @@
 import { useState, type ChangeEvent } from "react";
 import { categories } from "../data/categories";
+import type { Activity } from "../types";
 
 export default function Form() {
-  const [activity, setActivity] = useState({
+  const [activity, setActivity] = useState<Activity>({
     category: 1,
     name: "",
     calories: 0,
@@ -13,10 +14,17 @@ export default function Form() {
       | ChangeEvent<HTMLSelectElement, HTMLSelectElement>
       | ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
+    const isNumberField = ["category", "calories"].includes(e.target.id);
+
     setActivity({
       ...activity,
-      [e.target.id]: e.target.value,
+      [e.target.id]: isNumberField ? +e.target.value : e.target.value,
     });
+  };
+
+  const isValidActivity = () => {
+    const { name, calories } = activity;
+    return name.trim() !== "" && calories > 0;
   };
 
   return (
@@ -69,8 +77,10 @@ export default function Form() {
 
       <input
         type="submit"
-        className=" bg-gray-500 hover:bg-gray-700 w-full p-2 font-bold uppercase text-white cursor-pointer"
+        className=" bg-gray-500 hover:bg-gray-700 w-full p-2 font-bold uppercase text-white cursor-pointer
+        disabled:opacity-10"
         value="Añadir"
+        disabled={!isValidActivity()}
       />
     </form>
   );
