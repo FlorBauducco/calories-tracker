@@ -10,6 +10,8 @@ function App() {
     localStorage.setItem("activities", JSON.stringify(state.activities));
   }, [state.activities]);
 
+  const canRestartApp: boolean = state.activities.length > 0;
+
   return (
     <>
       <header className="bg-[#787569] 0 py-3">
@@ -17,6 +19,14 @@ function App() {
           <h1 className="text-center text-lg font-bold text-white uppercase">
             Contador de Calorias
           </h1>
+
+          <button
+            className="bg-[#C9C5B1] enabled:hover:bg-[#918c73] p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm disabled:opacity-30 "
+            disabled={!canRestartApp}
+            onClick={() => dispatch({ type: "restart-app" })}
+          >
+            Reiniciar App
+          </button>
         </div>
       </header>
 

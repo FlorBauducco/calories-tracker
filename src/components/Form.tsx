@@ -118,7 +118,7 @@ export default function Form({ dispatch, state }: FormProps) {
 
       <input
         type="submit"
-        className=" bg-gray-500 hover:bg-gray-700 w-full p-2 font-bold uppercase text-white cursor-pointer
+        className=" bg-gray-500 enabled:hover:bg-gray-700 w-full p-2 font-bold uppercase text-white cursor-pointer
         disabled:opacity-10"
         value={activity.category === 1 ? "Añadir comida" : "Añadir ejercicio"}
         disabled={!isValidActivity()}
