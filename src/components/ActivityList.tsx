@@ -48,7 +48,7 @@ export default function ActivityList({
               <p className="text-2xl font-bold pt-5 text-gray-700">
                 {activity.name}
               </p>
-              <p className="font-black text-4xl text-[#d3ec59]">
+              <p className="font-black text-4xl text-orange-300">
                 {activity.calories} {""}
                 <span>Calorias</span>
               </p>
